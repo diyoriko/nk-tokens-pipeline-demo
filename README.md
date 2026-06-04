@@ -82,6 +82,37 @@ grep background-brand-default build/css/variables.css
 
 ---
 
+## Consuming the outputs (devs)
+
+The outputs are published as a versioned npm package — **`@diyoriko/nk-tokens`** — to
+**GitHub Packages** on every `v*` tag (see `.github/workflows/publish-tokens.yml`).
+
+```ini
+# .npmrc in the consumer (e.g. parent-mf). GitHub Packages needs auth even for public packages.
+@diyoriko:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}   # a PAT with read:packages
+```
+```bash
+npm i @diyoriko/nk-tokens
+```
+```ts
+import '@diyoriko/nk-tokens/css/variables.css';      // injects :root { --nk-* }
+import { tokens } from '@diyoriko/nk-tokens/tokens';  // typed token tree
+```
+
+Use the vars directly — they coexist with MUI's `--mui-*` (different prefix, no clash):
+```tsx
+<Button sx={{ bgcolor: 'var(--nk-color-background-brand-default)' }} />
+```
+
+A token change → new package version → Renovate/Dependabot opens a bump PR in the
+consumer, which the dev reviews and merges. Semver lets consumers upgrade deliberately.
+
+> **Production:** re-scope to `@novakid` under the org repo — GitHub Packages requires
+> the package scope to match the repo owner.
+
+---
+
 ## Tokens Studio setup (designer side, free Starter — €0)
 
 Once, in the Figma Foundations file:
