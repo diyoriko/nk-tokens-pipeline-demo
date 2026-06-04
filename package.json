@@ -1,13 +1,28 @@
 {
-  "name": "nk-tokens-pipeline-demo",
+  "name": "@diyoriko/nk-tokens",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
-  "description": "End-to-end demo of the Novakid design-token pipeline: Figma Variables -> Tokens Studio -> Git -> Style Dictionary -> --nk-* CSS / Dart / TS. Phase-0 foundations.",
+  "description": "Novakid design tokens — generated --nk-* CSS / Dart / TS from the Figma -> Tokens Studio -> Style Dictionary pipeline.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diyoriko/nk-tokens-pipeline-demo.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "build"
+  ],
+  "exports": {
+    "./css/variables.css": "./build/css/variables.css",
+    "./tokens": "./build/ts/tokens.ts",
+    "./dart/nk_colors.dart": "./build/dart/nk_colors.dart"
+  },
   "scripts": {
     "build:tokens": "node build-tokens.mjs",
     "storybook": "npm run build:tokens && storybook dev -p 6006",
-    "build-storybook": "npm run build:tokens && storybook build"
+    "build-storybook": "npm run build:tokens && storybook build",
+    "prepack": "npm run build:tokens"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.6.0",
