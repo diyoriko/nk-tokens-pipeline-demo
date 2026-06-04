@@ -1,0 +1,35 @@
+// GATED — not built (pending brand/dict decision).
+// ---------------------------------------------------------------------------
+// This file is NOT part of the build. Style Dictionary's source glob is
+// `tokens/**/*.json`; a `.jsonc` file is deliberately excluded so these
+// entries never reach variables.css / nk_colors.dart / tokens.ts.
+//
+// These 5 semantic aliases are valid names under the closed grammar but are
+// withheld from the live token set because their targets don't exist yet —
+// emitting them would create DANGLING references and break the build.
+//
+//  4 × color/{background,text,border,icon}/warning/default  ->  color/amber/*
+//      The `amber` ramp is PROVISIONED-ONLY: 0 rows built (final-token-tree §7,
+//      all amber is illustration-only / 0 code-styling). Build these four the
+//      moment brand approves a real `warning` intent + the amber rows land.
+//
+//  1 × color/background/accent/default  ->  color/lemon/400
+//      The intent `accent` is NOT in the closed intent dict
+//      (surface × intent × variant). `lemon/400` (the brand secondary anchor)
+//      therefore has no compliant semantic home until `accent` is added to the
+//      intent axis in Confluence. Until then lemon lives only as a primitive.
+//
+// Shown below as the would-be DTCG entries, so adding them later is a
+// copy-paste into tokens.json — never a redesign:
+//
+// "color": {
+//   "background": {
+//     "warning": { "default": { "$type": "color", "$value": "{color.amber.50}"  } },
+//     "accent":  { "default": { "$type": "color", "$value": "{color.lemon.400}" } }
+//   },
+//   "text":   { "warning": { "default": { "$type": "color", "$value": "{color.amber.700}" } } },
+//   "border": { "warning": { "default": { "$type": "color", "$value": "{color.amber.400}" } } },
+//   "icon":   { "warning": { "default": { "$type": "color", "$value": "{color.amber.600}" } } }
+// }
+//
+// Net: live tokens.json = 48 semantic aliases; +5 gated here = 53 total (§7.3).
