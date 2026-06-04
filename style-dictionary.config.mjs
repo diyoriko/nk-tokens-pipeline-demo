@@ -14,7 +14,7 @@
 
 export default {
   source: ['tokens/**/*.json'],
-  preprocessors: ['nk/unwrap-global'],
+  preprocessors: ['nk/flatten-sets'],
   platforms: {
     // ---- Web: CSS custom properties -------------------------------------
     css: {
