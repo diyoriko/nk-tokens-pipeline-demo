@@ -12,16 +12,30 @@ import config from './style-dictionary.config.mjs';
 const resolved = (t) => t.$value ?? t.value; // SD v4 puts the resolved value on $value (DTCG)
 const typeOf = (t) => t.$type ?? t.type;
 
-// ---- Unwrap the single token set ----------------------------------------
-// tokens.json wraps everything in ONE set ("global") so Tokens Studio keeps it
-// as a single set and {color.*} aliases resolve in-plugin (TS turns top-level
-// keys into separate sets, which would strip the `color.` prefix and break the
-// aliases). Style Dictionary doesn't want that wrapper in the token path, so we
-// hoist `global` back to the root before processing — output names (`--nk-color-…`)
-// and resolved hexes are identical to the unwrapped tree.
+// ---- Flatten the two token sets -----------------------------------------
+// tokens.json is split into TWO Tokens Studio sets — `primitives` and `semantic` —
+// so the plugin creates two Figma Variable collections (Primitives + Semantic/Product)
+// per the spec. References stay path-based (`{color.violet.600}`) and resolve across
+// sets in-plugin because the set NAME isn't part of the token path (unlike when the
+// top-level group itself is the set name, which would strip the `color.` prefix).
+// Style Dictionary doesn't want the set layer in the token path, so we deep-merge
+// both sets back to one root tree — output names (`--nk-color-…`) and resolved hexes
+// are unchanged. Only `color` overlaps between the sets (hue groups vs surface groups,
+// no key collision), so the merge is clean.
+const isGroup = (v) => v && typeof v === 'object' && v.$value === undefined;
+const deepMerge = (a, b) => {
+  const out = { ...a };
+  for (const k of Object.keys(b)) {
+    out[k] = isGroup(out[k]) && isGroup(b[k]) ? deepMerge(out[k], b[k]) : b[k];
+  }
+  return out;
+};
 StyleDictionary.registerPreprocessor({
-  name: 'nk/unwrap-global',
-  preprocessor: (dictionary) => dictionary.global ?? dictionary,
+  name: 'nk/flatten-sets',
+  preprocessor: (d) =>
+    d.primitives || d.semantic
+      ? deepMerge(d.primitives ?? {}, d.semantic ?? {})
+      : d.global ?? d,
 });
 
 // ---- Dimensions: bare number in source -> px on output ------------------

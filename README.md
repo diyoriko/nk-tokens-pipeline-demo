@@ -72,7 +72,7 @@ grep on-lemon build/css/variables.css
 
 | Path | Role |
 |---|---|
-| `tokens/tokens.json` | The **right-sized DTCG build set** (final-token-tree §7.1) — the shape Tokens Studio pushes from Figma. 35 colour primitives (only what semantics consume) + space/radius/stroke + atomic typography + atomic shadow + 48 semantic aliases. Dimensions are bare numbers (px added on output). |
+| `tokens/tokens.json` | The **right-sized DTCG build set** (final-token-tree §7.1) — the shape Tokens Studio pushes from Figma. Two token sets — **`primitives`** (35 colours + space/radius/stroke + atomic typography + atomic shadow) and **`semantic`** (48 aliases) — so the plugin creates two Figma collections (Primitives + Semantic/Product). Dimensions are bare numbers (px added on output). Style Dictionary deep-merges the two sets back to one root via the `nk/flatten-sets` preprocessor, so `--nk-*` names/hexes are unchanged. |
 | `tokens/gated.tokens.jsonc` | The **5 gated** semantic tokens, documented but not built (4 `*/warning/*` → unbuilt amber; 1 `accent` → not in the intent dict). Not loaded by the build. |
 | `style-dictionary.config.mjs` | Platform config: CSS / Dart / TS. |
 | `build-tokens.mjs` | Build runner + the two custom formats (`nk/dart-colors`, `nk/ts-nested`). |
