@@ -1,0 +1,13 @@
+{
+  "name": "nk-tokens-pipeline-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "End-to-end demo of the Novakid design-token pipeline: Figma Variables -> Tokens Studio -> Git -> Style Dictionary -> --nk-* CSS / Dart / TS. Phase-0 foundations.",
+  "scripts": {
+    "build:tokens": "node build-tokens.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.3.3"
+  }
+}
