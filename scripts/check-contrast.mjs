@@ -16,10 +16,16 @@ const fg = (v) => (v && v.startsWith('#') ? v : g(v));
 const BRAND = ['violet', 'blue', 'magenta', 'coral', 'green', 'orange', 'lemon'];
 const STATUS = ['success', 'warning', 'danger', 'info'];
 
-// brand: bright primary + tint secondary, dark hue text (X/900); brand-as-text on white; border on white
+// brand: bright primary + tint secondary/tertiary, each with a hover; dark hue text (X/900) holds across rest+hover.
+// on-primary is used on primary AND primary-hover; on-secondary on secondary(+hover); on-tertiary on tertiary(+hover).
+// green/lemon are 2-level (no tertiary) — those checks resolve to null and are skipped.
 for (const h of BRAND) {
   checks.push([`brand-${h}.on-primary`, `color-text-brand-${h}-on-primary`, `color-background-brand-${h}-primary`, 4.5]);
+  checks.push([`brand-${h}.on-primary@hover`, `color-text-brand-${h}-on-primary`, `color-background-brand-${h}-primary-hover`, 4.5]);
   checks.push([`brand-${h}.on-secondary`, `color-text-brand-${h}-on-secondary`, `color-background-brand-${h}-secondary`, 4.5]);
+  checks.push([`brand-${h}.on-secondary@hover`, `color-text-brand-${h}-on-secondary`, `color-background-brand-${h}-secondary-hover`, 4.5]);
+  checks.push([`brand-${h}.on-tertiary`, `color-text-brand-${h}-on-tertiary`, `color-background-brand-${h}-tertiary`, 4.5]);
+  checks.push([`brand-${h}.on-tertiary@hover`, `color-text-brand-${h}-on-tertiary`, `color-background-brand-${h}-tertiary-hover`, 4.5]);
   checks.push([`brand-${h}.text/white`, `color-text-brand-${h}-primary`, W, 4.5]);
   checks.push([`brand-${h}.border/white`, `color-border-brand-${h}-default`, W, 3]);
 }
