@@ -1,24 +1,5 @@
 # nk-tokens-pipeline
 
-Runnable end-to-end demo of the **Novakid design-token pipeline** — one source of
-truth becomes `--nk-*` CSS, Dart, and TypeScript, automatically.
-
-> **Foundations v1** — **our brand values × the Figma SDS topology.** The token
-> *values* come from Novakid research (parent-mf product code, Landing DS Variables,
-> Brand Book — Mikado type, the brand colour Mains). The *structure* mirrors Figma's
-> open-source Simple Design System: one collection per domain, primitive↔semantic
-> split, full colour ramps, shadows as effect styles.
->
-> Colour ramps are **generated smooth (OKLCH)** anchored on the real brand Mains
-> (`violet/600 #6D46FC` and `lemon/200 #FFE60A` pinned exact) — the generated
-> intermediate steps are **pending brand sign-off**.
-
-**Live token catalogue (Storybook):** https://diyoriko.github.io/nk-tokens-pipeline/
-
-**Truth sources** (design-code foundations, not in this repo): `primitive-palette.md`
-(real-source colour audit + legacy→token lookup) · `final-token-tree.md` · Confluence
-**["Token Tree"](https://novakidschool.atlassian.net/wiki/spaces/UD/pages/7245791234)**.
-
 ---
 
 ## The pipeline
